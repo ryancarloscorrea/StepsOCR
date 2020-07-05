@@ -5,8 +5,11 @@ from pytesseract import Output # usado para obter um dicionario de dados sobre a
 import matplotlib.pyplot as plt # usado para exibir a imagem
 
 img = cv2.imread('../../../Ativadade2/Steps/testeGIT/WordSegmentation-master/src/rgCorreto.jpeg') #lendo a imagem
-d = pytesseract.image_to_data(img, output_type=Output.DICT)
+imgGray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY) #imagem em escalas de cinza
+thresh = cv2.threshold(imgGray, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1] #imagem binária
+d = pytesseract.image_to_data(thresh, output_type=Output.DICT)
 #em d possui todas as informações sobre a imagem (['level', 'page_num', 'block_num', 'par_num', 'line_num', 'word_num', 'left', 'top', 'width', 'height', 'conf', 'text'])
+
 
 numbers_test = '[0-9]' #para testar padroes que contenham numeros de 0 a 9
 
